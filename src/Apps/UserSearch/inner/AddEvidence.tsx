@@ -1,3 +1,5 @@
+import { Button } from '../../../recipes/build/Button/Button';
+import { useApp } from '../../../Apps/context';
 import { Dropwdown } from '../../../recipes/build/Dropdown/Dropdown';
 import FieldRow from '../../../recipes/build/FieldRow/FieldRow';
 import Fieldset from '../../../recipes/build/Fieldset/Fieldset';
@@ -28,6 +30,19 @@ const AddEvidence: Component<{
     'deleteButton',
   ]);
   const [evidence, setEvidence] = createSignal('none');
+  const {newReport,setNewReport} = useApp()
+  const [newEvidence,setNewEvidence] = createSignal({
+    name:"",
+    type:"",
+    adress:"",
+    duty:"",
+    message:"",
+    info:""
+  })
+  function addEvidenceToReport(){
+    setNewReport("evidence",{...newEvidence()})
+    console.log(newReport)
+  }
   return (
     <Portal mount={document.body}>
       <Modal
@@ -37,6 +52,7 @@ const AddEvidence: Component<{
         title='Report Summary'
         onClickDelete={props.onClickDelete}
         deleteButton={props.deleteButton}
+        onClick={addEvidenceToReport}
       >
         <Fieldset>
           <p>Evidence Type</p>
@@ -59,24 +75,28 @@ const AddEvidence: Component<{
             >
             <>
                 <FieldRow>
-                  <Input type='text' label='Name'></Input>
-                  <Input type='text' label='Adress'></Input>
-                  <Input type='text' label='Duty'></Input>
+                  <Input onChange={(e)=>setNewEvidence(e => e.name = e.target.value)} type='text' label='Name'></Input>
+                  <Input onChange={(e)=>setNewEvidence(e => e.adress = e.target.value)} type='text' label='Adress'></Input>
+                  <Input onChange={(e)=>setNewEvidence(e => e.duty = e.target.value)} type='text' label='Duty'></Input>
                 </FieldRow>
               </>
             </Match>
             <Match when={evidence() === 'evidence'}
             >
             <>
-            <Textarea></Textarea>
+            <Textarea onChange={(e)=>setNewEvidence(e => e.message = e.target.value)}></Textarea>
               </>
             </Match>
           </Switch>
           
         </Fieldset>
+        <Button onClick={addEvidenceToReport}>Add Evidence</Button>
+        
       </Modal>
     </Portal>
   );
 };
 
 export default AddEvidence;
+
+

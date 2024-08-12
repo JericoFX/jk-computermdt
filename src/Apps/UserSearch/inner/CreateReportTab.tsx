@@ -7,7 +7,7 @@ import {
   HStack,
 } from '../../../../styled-system/jsx';
 import Fieldset from '../../../recipes/build/Fieldset/Fieldset';
-import { Component, createSignal } from 'solid-js';
+import { Component, For, createSignal } from 'solid-js';
 import Input from '../../../recipes/build/Input/Input';
 import { css } from '../../../../styled-system/css';
 import { Dropwdown } from '../../../recipes/build/Dropdown/Dropdown';
@@ -22,9 +22,11 @@ import {
   TableCell,
 } from '../../../recipes/build/Table/Table';
 import AddEvidence from './AddEvidence';
+import { useApp } from '../../../Apps/context';
 
 const CreateReportTab: Component<{}> = (_props) => {
   const [openEvidence, setOpenEvidence] = createSignal(false);
+  const {newReport,setNewReport} = useApp()
   return (
     <Box w='100%' h='100%' position='relative'>
       <Box w='30%' float='left' p='3'>
@@ -81,14 +83,20 @@ const CreateReportTab: Component<{}> = (_props) => {
           </TableRow>
         </TableThread>
         <TableBody>
-          <TableRow>
-            <TableCell>Johann</TableCell>
-            <TableCell>
-              KrausssdaasdsdasadasdsadsadsdaasdsdasadsadsadsadasdasdsaKrausssdaasdsdasadasdsadsadsdaasdsdasadsadsadsadasdasdsa
-            </TableCell>
-            <TableCell>12345</TableCell>
-            <TableCell>Yes</TableCell>
-          </TableRow>
+          <For fallback={<>No Envidence</>} each={newReport.evidence}> {(item) => (
+            <>
+                <TableRow>
+                  <TableCell>{item.id}</TableCell>
+                  <TableCell>{item.type}</TableCell>
+                  <TableCell>{item.createdBy}</TableCell>
+                  <TableCell>{item.message}</TableCell>
+                  <TableCell>{item.info}</TableCell>
+                </TableRow>
+                </>
+              )}
+
+          </For>
+          
         </TableBody>
       </Table>
       <Fieldset legend='Actions'>

@@ -171,13 +171,10 @@ const ReportTab: Component<{}> = (props) => {
           <TableBody>
             <For each={Data}>
               {(item) => (
-                <TableRow
-                  onDblClick={() => setOpenModal(true)}
-                  onClick={() => setmodalInfo(item)}
-                >
+                <TableRow>
                   <TableCell>{item.id}</TableCell>
-                  <TableCell>{item.type}</TableCell>
-                  <TableCell>{item.createdBy}</TableCell>
+                  <TableCell>{item.duty}</TableCell>
+                  <TableCell>{item.adress}</TableCell>
                   <TableCell>{item.message}</TableCell>
                   <TableCell>{item.info}</TableCell>
                 </TableRow>
