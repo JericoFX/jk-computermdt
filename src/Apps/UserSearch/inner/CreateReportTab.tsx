@@ -97,7 +97,7 @@ const CreateReportTab: Component<{}> = (_props) => {
           <Button>Cancel</Button>
         </HStack>
       </Fieldset>
-      <AddEvidence open={openEvidence()}></AddEvidence>
+      <AddEvidence onClick={() => setOpenEvidence(false)} open={openEvidence()}></AddEvidence>
     </Box>
   );
 };

@@ -4,7 +4,7 @@ import Fieldset from '../../../recipes/build/Fieldset/Fieldset';
 import Input from '../../../recipes/build/Input/Input';
 import Modal from '../../../recipes/build/Modal/Modal';
 import Textarea from '../../../recipes/build/Textarea/Textarea';
-import { Component, createSignal, Show, splitProps } from 'solid-js';
+import { Component, createSignal, Match, Show, splitProps, Switch } from 'solid-js';
 import { Portal } from 'solid-js/web';
 
 const AddEvidence: Component<{
@@ -50,20 +50,29 @@ const AddEvidence: Component<{
             <option value='evidence'>Evidence</option>
             <option value='police'>Police</option>
           </Dropwdown>
-          <Show
-            when={evidence() === 'evidence'}
-            fallback={
-              <>
+          <Switch>
+            <Match when={evidence() === 'none'}
+            >
+              <p>Select One type</p>
+            </Match>
+            <Match when={evidence() === 'police'}
+            >
+            <>
                 <FieldRow>
                   <Input type='text' label='Name'></Input>
                   <Input type='text' label='Adress'></Input>
                   <Input type='text' label='Duty'></Input>
                 </FieldRow>
               </>
-            }
-          >
+            </Match>
+            <Match when={evidence() === 'evidence'}
+            >
+            <>
             <Textarea></Textarea>
-          </Show>
+              </>
+            </Match>
+          </Switch>
+          
         </Fieldset>
       </Modal>
     </Portal>
